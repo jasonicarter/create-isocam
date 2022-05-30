@@ -54,19 +54,23 @@ class PR_OT_creategameisocam(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
-
+        view_layer = bpy.context.view_layer
         # ----------------------------Create Camera with correct position and rotation
-        bpy.ops.object.camera_add(location=(30.60861, -30.60861, 25.00000)) # Create Camera. I would love to set the rotation here too. Blender not. Not that there are no tutorials around which shows that it should work ... .
+        cam1 =  bpy.data.cameras.new(name="Camera Iso Test")
+        # ------------------------------Here we adjust some settings ---------------------------------
+
+        cam1.type = 'ORTHO' # We want Iso, so set the type of the camera to orthographic
+        cam1.ortho_scale=14.123 # Let's fit the camera to our basetile in size of 10
+        camera = bpy.data.objects.new(name="Camera Iso", object_data =cam1)
+        view_layer.active_layer_collection.collection.objects.link(camera)
+        camera.location = (30.60861, -30.60861, 25.00000)
+        camera.rotation_euler=(1.047198, 0, 0.785398) #Attention, these are radians. Euler angles are (60,0,45) Here we set the rotation for a isometric view that is used in 2D games. Not to mix with the mathematical correct Isoview!
+       
+        # Create Camera. I would love to set the rotation here too. Blender not. Not that there are no tutorials around which shows that it should work ... .
 
         #So that's what the next two lines are good for. Setting the rotation of the camera ...
 
-        object = bpy.context.active_object
-        object.rotation_euler = (1.047198, 0, 0.785398)#Attention, these are radians. Euler angles are (60,0,45) Here we set the rotation for a isometric view that is used in 2D games. Not to mix with the mathematical correct Isoview!
-
-        # ------------------------------Here we adjust some settings ---------------------------------
-        object.data.type = 'ORTHO' # We want Iso, so set the type of the camera to orthographic
-        object.data.ortho_scale = 14.123  # Let's fit the camera to our basetile in size of 10
-        object.name = "GameIsoCam" # let's rename the cam so that it cannot be confused with other cameras.
+         # let's rename the cam so that it cannot be confused with other cameras.
         bpy.ops.view3d.object_as_camera() # Set the current camera as the active one to look through
 
 
