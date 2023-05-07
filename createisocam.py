@@ -1,4 +1,4 @@
-﻿# This script creates two kinds of isometric cameras.
+# This script creates two kinds of isometric cameras.
 #The one, TrueIsocam called camera, is the mathematical correct isometric camera with the 54.736 rotation to get the 30 degrees angles at the sides of the rhombus.
 #The other, GameIsocam called camera, is a camera with which you can render isometric tiles for a 2d game. Here we need a 60 degrees angle instedad of the 54.736 one to get a proper stairs effect and a ratio of 2:1
 # Then there is the special case with a 4:3 ratio, which is button 3. You can also make 2D games with that one. The view is more topdown though as with a 2:1 ratio of the traditional game iso view.
@@ -65,7 +65,7 @@ class PR_OT_creategameisocam(bpy.types.Operator):
         view_layer.active_layer_collection.collection.objects.link(camera)
         camera.location = (30.60861, -30.60861, 25.00000)
         camera.rotation_euler=(1.047198, 0, 0.785398) #Attention, these are radians. Euler angles are (60,0,45) Here we set the rotation for a isometric view that is used in 2D games. Not to mix with the mathematical correct Isoview!
-       
+
         # Create Camera. I would love to set the rotation here too. Blender not. Not that there are no tutorials around which shows that it should work ... .
 
         #So that's what the next two lines are good for. Setting the rotation of the camera ...
